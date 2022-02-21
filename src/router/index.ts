@@ -13,6 +13,31 @@ const router = createRouter({
       component: () => import("../modules/homePage/index.vue"),
     },
     {
+      path: "/",
+      name: "my",
+      component: () => import("../modules/my/index.vue"),
+    },
+    {
+      path: "/",
+      name: "forum",
+      component: () => import("../modules/forum/index.vue"),
+    },
+    {
+      path: "/",
+      name: "addForum",
+      component: () => import("../modules/forum/add.vue"),
+    },
+    {
+      path: "/",
+      name: "editForum",
+      component: () => import("../modules/forum/edit.vue"),
+    },
+    {
+      path: "/",
+      name: "tag",
+      component: () => import("../modules/tag/index.vue"),
+    },
+    {
       path: "/login",
       name: "login",
       component: () => import("../modules/user/login.vue"),
