@@ -1,6 +1,18 @@
 <template>
-  <div>
-    论坛
+  <div class="header">
+    <van-swipe :autoplay="3000" lazy-render>
+      <van-swipe-item v-for="image in images" :key="image">
+        <img :src="image" />
+      </van-swipe-item>
+    </van-swipe>
+    <van-search
+      class="search-forum"
+      v-model="forum_search"
+      placeholder="请输入搜索关键词"
+    />
+    <van-button class="news" round type="primary">消息</van-button>
+  </div>
+  <div class="popover-type">
     <van-popover
       v-model:show="showPopover"
       :actions="actions"
@@ -13,21 +25,25 @@
       </template>
     </van-popover>
   </div>
-  <show-forum></show-forum>
+  <van-tabs v-model:active="activeName">
+    <van-tab title="全部" name="a">
+      <ShowForum class="index-xia" />
+    </van-tab>
+    <van-tab title="精选" name="b">
+      <ShowForum class="index-xia" />
+    </van-tab>
+    <van-tab title="校训" name="c">
+      <ShowForum class="index-xia" />
+    </van-tab>
+  </van-tabs>
 </template>
-<script lang="ts">
-export default defineComponent({
-  components: {
-    ShowForum,
-  },
-});
-</script>
 <script lang="ts" setup>
-import { ref, defineComponent } from "vue";
+import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import ShowForum from "./show.vue";
 const showPopover = ref(false);
 const router = useRouter();
+const activeName = ref("a");
 const actions = [
   { text: "论坛", icon: "add-o" },
   { text: "评论", icon: "music-o" },
@@ -50,20 +66,56 @@ const onSelect = (val: { text: string; icon: string }) => {
       name: "",
     });
   }
-  console.log("1111");
+  const forum_search = "";
 };
+const images = reactive([
+  "http://yangchuan.club/pageapi_1646290348470.png",
+  "http://yangchuan.club/pageapi_1646290349036.png",
+  "http://yangchuan.club/pageapi_1646290349602.png",
+]);
 </script>
 <style lang="scss" scoped>
+.header {
+  height: 200px;
+  width: 100%;
+  img {
+    width: 100%;
+    height: 200px;
+  }
+  .search-forum {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  .news{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  // background: red;
+  // display: flex;
+  .van-search {
+    background: none;
+    width: 80%;
+    height: 60px;
+  }
+  .van-button {
+    margin-top: 10px;
+  }
+}
 .forum-type {
-  position: absolute;
+  position: fixed;
   bottom: 70px;
   right: 20px;
   border-radius: 50%;
   width: 70px;
   height: 70px;
+  z-index: 100000;
 }
-.forum-popover {
-  right: 20px !important;
-  bottom: 70px !important;
+.popover-type {
+  height: 0px;
+}
+.index-xia {
+  margin-bottom: 60px;
 }
 </style>
