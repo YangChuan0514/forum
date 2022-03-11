@@ -47,7 +47,6 @@ export default defineComponent({
     };
     const images = props.images;
     const imagesType = props.imagesType;
-    console.log(images)
     return {
       numImg,
       show,

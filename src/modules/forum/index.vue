@@ -10,7 +10,9 @@
       v-model="forum_search"
       placeholder="请输入搜索关键词"
     />
-    <van-button class="news" round type="primary">消息</van-button>
+    <van-button class="news" round type="primary" @click="onWarn"
+      >消息</van-button
+    >
   </div>
   <div class="popover-type">
     <van-popover
@@ -73,6 +75,11 @@ const images = reactive([
   "http://yangchuan.club/pageapi_1646290349036.png",
   "http://yangchuan.club/pageapi_1646290349602.png",
 ]);
+const onWarn = () => {
+  router.push({
+    name: "warn",
+  });
+};
 </script>
 <style lang="scss" scoped>
 .header {
@@ -87,7 +94,7 @@ const images = reactive([
     top: 10px;
     left: 10px;
   }
-  .news{
+  .news {
     position: absolute;
     top: 10px;
     right: 10px;

@@ -201,11 +201,9 @@ let birthdayDate = ref("");
 onMounted(async () => {
   const res = await getMessageService({ userId: Number(id) });
   userMessage.value = res.data[0];
-  console.log(res.data[0]);
-  locationDate.value = JSON.parse(userMessage.value.location)
+  locationDate.value = JSON.parse(userMessage.value?.location)
     .map((item) => item.name)
     .join("-");
-  console.log(locationDate);
   birthdayDate.value = dayjs(userMessage.value.birthday * 1000).format(
     "YYYY-MM-DD"
   );

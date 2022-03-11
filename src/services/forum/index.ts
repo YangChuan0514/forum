@@ -173,3 +173,48 @@ export async function getUserAttentionMessage(obj: { userId: number }) {
   });
   return data;
 }
+
+// 评价我的
+export async function getUserForumComment(obj: {
+  userId: number;
+  l: number;
+  o: number;
+}) {
+  let data = {};
+  await axios.post("/api/getUserForumComment", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+export async function addUserAttention(obj: {
+  userId: number;
+  userattId: number;
+  newTime: number;
+}) {
+  let data = {};
+  await axios.post("/api/addUserAttention", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+export async function deleteUserAttention(obj: {
+  userId: number;
+  userattId: number;
+}) {
+  let data = {};
+  await axios.post("/api/deleteUserAttention", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+
+//  更新关注
+export async function updateUserAttWarn(obj: {
+  userId: number;
+}) {
+  let data = {};
+  await axios.post("/api/updateUserAttWarn", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}

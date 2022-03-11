@@ -120,7 +120,6 @@ onMounted(async () => {
   winDZ.value = numList[1]?.data?.length || 0;
   fans.value = numList[2]?.data?.length || 0;
   userDate.value = numList[3]?.data[0];
-  console.log(userDate.value);
 });
 
 const router = useRouter();

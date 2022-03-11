@@ -25,7 +25,6 @@ const coverUrl = ref("");
 let file = "";
 const changeFile = (e) => {
   //   获取文件
-  console.log(e.target.files[0])
   file = e.target.files[0];
 };
 
