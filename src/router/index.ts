@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory, useRouter } from "vue-router";
 import type { App } from "vue";
-import forum from "./forum";
 import homePage from "./homePage";
 import my from "./my";
+import forum from "./forum";
 import { login, register, changePassword } from "./user";
 
 const routerHistory = createWebHistory();
@@ -55,6 +55,11 @@ const router = createRouter({
       path: "/user/message/edit",
       name: "userMessageEdit",
       component: () => import("../modules/my/write_message.vue"),
+    },
+    {
+      path: "/warn",
+      name: "warn",
+      component: () => import("../modules/warn/index.vue"),
     },
     login,
     register,
