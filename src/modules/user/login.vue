@@ -67,7 +67,7 @@ const onLogin = async () => {
     store.dispatch("userEdit", res.data.id);
     setCookie(res.data.id);
     router.push({
-      name: "homePage",
+      name: "forum",
     });
   } else {
     Notify({ type: "warning", message: res?.data?.data });

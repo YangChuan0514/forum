@@ -19,16 +19,24 @@
         个人宣言：{{ userDate.information }}
       </div>
       <div class="tags" @click="updateMessage">
-        <van-tag plain type="primary" class="tag-type">{{
+        <van-tag plain type="primary" class="tag-type" v-if="userDate.sex">{{
           userDate.sex
         }}</van-tag>
-        <van-tag plain type="primary" class="tag-type">{{
-          userDate.location
-        }}</van-tag>
-        <van-tag plain type="primary" class="tag-type">{{
-          userDate.birthday
-        }}</van-tag>
-        <van-tag plain type="primary" class="tag-type">{{
+        <van-tag
+          plain
+          type="primary"
+          class="tag-type"
+          v-if="userDate.location"
+          >{{ typeJson(userDate.location) }}</van-tag
+        >
+        <van-tag
+          plain
+          type="primary"
+          class="tag-type"
+          v-if="userDate.birthday"
+          >{{ time(Number(userDate.birthday)) }}</van-tag
+        >
+        <van-tag plain type="primary" class="tag-type" v-if="userDate.school">{{
           userDate.school
         }}</van-tag>
       </div>
@@ -49,15 +57,12 @@
     </div>
     <van-tabs v-model:active="activeName">
       <van-tab title="作品" name="a">
-        <!-- <UserForum /> -->
         <showForum :forumType="'userId'" />
       </van-tab>
       <van-tab title="喜欢" name="b">
-        <!-- <UserLike /> -->
         <showForum :forumType="'userIdDz'" />
       </van-tab>
       <van-tab title="收藏" name="c">
-        <!-- <UserComment /> -->
         <showForum :forumType="'userIdCt'" />
       </van-tab>
     </van-tabs>
@@ -65,9 +70,8 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted } from "vue";
-import Images from "../../components/Image.vue";
-import showForum from "../forum/show.vue";
-import {
+import dayjs from "dayjs";
+import showForum from "../forum/show.vue";import {
   getUserAttentionMessage,
   getUserDianzanNum,
   getUserAttentionTMessage,
@@ -129,6 +133,13 @@ const updateMessage = () => {
     params: userDate.value,
   });
 };
+const typeJson = (val: string) => {
+  const date = (val = JSON.parse(val));
+  return date?.map((item) => item.name).join("-");
+};
+const time = (val: number) => {
+  return dayjs(val * 1000).format("YYYY-MM-DD HH:mm:ss");
+};
 </script>
 <style lang="scss" scoped>
 .header-type {
@@ -165,8 +176,13 @@ const updateMessage = () => {
 .tag-type {
   height: 20px;
   font-size: 12px;
+  margin: 3px 0px;
+}
+.tags {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   margin-left: 30px;
-  margin-top: 10px;
 }
 .user-num {
   width: 200px;

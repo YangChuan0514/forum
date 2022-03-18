@@ -11,8 +11,12 @@
         <van-field
           v-model="addForum.content"
           name="concent"
+          type="textarea"
+          autosize
+          rows="1"
           placeholder="请填写帖子内容..."
           :rules="[{ required: true, message: '请填写帖子内容' }]"
+          class="textarea-type"
         />
         <van-field label="上传照片:">
           <template #input>
@@ -155,5 +159,12 @@ const VideoList = ref([]);
 .video-play {
   margin-top: 30px;
   width: 100%;
+}
+.textarea-type {
+  min-height: 70px;
+  width: 90%;
+  border: 1px solid #dcdee0;
+  margin: 3px auto;
+  padding: 0px;
 }
 </style>

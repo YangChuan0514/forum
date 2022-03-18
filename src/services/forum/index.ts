@@ -209,11 +209,43 @@ export async function deleteUserAttention(obj: {
 }
 
 //  更新关注
-export async function updateUserAttWarn(obj: {
-  userId: number;
-}) {
+export async function updateUserAttWarn(obj: { userId: number }) {
   let data = {};
   await axios.post("/api/updateUserAttWarn", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+
+// 模糊搜索
+export async function fuzzySearch(obj: {
+  search: number;
+  o: number;
+  l: number;
+}) {
+  let data = {};
+  await axios.post("/api/getForumDataDim", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+// 更新点赞warn
+export async function updateDianzanWarn(obj: { userId: number }) {
+  let data = {};
+  await axios.post("/api/updateDianzanWarn", obj).then((res) => {
+    data = res;
+  });
+  return data;
+}
+
+// 更新评论warn
+export async function updateUserForumComment(obj: {
+  userId: number;
+  o: number;
+  l: number;
+}) {
+  let data = {};
+  await axios.post("/api/updateUserForumComment", obj).then((res) => {
     data = res;
   });
   return data;

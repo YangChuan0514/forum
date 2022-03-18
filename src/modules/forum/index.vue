@@ -9,6 +9,13 @@
       class="search-forum"
       v-model="forum_search"
       placeholder="请输入搜索关键词"
+      @keypress="
+        (e) => {
+          if (e.keyCode === 13 && forum_search) {
+            onFuzzySearch(forum_search);
+          }
+        }
+      "
     />
     <van-button class="news" round type="primary" @click="onWarn"
       >消息</van-button
@@ -43,6 +50,7 @@
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import ShowForum from "./show.vue";
+import { fuzzySearch } from "../../services/forum";
 const showPopover = ref(false);
 const router = useRouter();
 const activeName = ref("a");
@@ -68,8 +76,8 @@ const onSelect = (val: { text: string; icon: string }) => {
       name: "",
     });
   }
-  const forum_search = "";
 };
+const forum_search = ref("");
 const images = reactive([
   "http://yangchuan.club/pageapi_1646290348470.png",
   "http://yangchuan.club/pageapi_1646290349036.png",
@@ -78,6 +86,14 @@ const images = reactive([
 const onWarn = () => {
   router.push({
     name: "warn",
+  });
+};
+const onFuzzySearch = async (val: string) => {
+  router.push({
+    name: "forumSearch",
+    query: {
+      search: val,
+    },
   });
 };
 </script>

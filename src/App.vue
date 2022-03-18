@@ -1,16 +1,17 @@
 <template>
   <!-- <div id="app"></div> -->
   <van-tabbar v-model="active" @change="pageChange" v-show="tabbarShow">
-    <van-tabbar-item name="home" icon="home-o">首页</van-tabbar-item>
-    <van-tabbar-item name="forum" icon="search">论坛</van-tabbar-item>
-    <van-tabbar-item name="mine" icon="friends-o">我的</van-tabbar-item>
+    <!-- <van-tabbar-item name="home" icon="home-o">首页</van-tabbar-item> -->
+    <van-tabbar-item name="forum" icon="home-o">首页</van-tabbar-item>
+    <van-tabbar-item name="community" icon="friends-o">社区</van-tabbar-item>
+    <van-tabbar-item name="my" icon="user-circle-o">我的</van-tabbar-item>
   </van-tabbar>
   <router-view></router-view>
 </template>
 <script lang="ts" setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref, watch, onMounted } from "vue";
-const active = ref("home");
+const active = ref("forum");
 const tabbarShow = ref(true);
 const route = useRoute();
 const router = useRouter();
@@ -18,7 +19,8 @@ watch(
   () => route.path,
   () => {
     const name = route.path;
-    if (["/homePage", "/forum", "/my"].includes(name)) {
+    if (["/community", "/forum", "/my"].includes(name)) {
+      active.value = String(route.name);
       tabbarShow.value = true;
     } else {
       tabbarShow.value = false;
@@ -27,17 +29,17 @@ watch(
 );
 onMounted(() => {
   const name = route.path;
-  if (["/homePage", "/forum", "/my"].includes(name)) {
+  if (["/community", "/forum", "/my"].includes(name)) {
+    active.value = String(route.name);
     tabbarShow.value = true;
   } else {
     tabbarShow.value = false;
   }
 });
 const pageChange = () => {
-  console.log(active.value);
-  if (active.value === "home") {
+  if (active.value === "community") {
     router.push({
-      name: "homePage",
+      name: "community",
     });
   }
   if (active.value === "forum") {
@@ -45,7 +47,7 @@ const pageChange = () => {
       name: "forum",
     });
   }
-  if (active.value === "mine") {
+  if (active.value === "my") {
     router.push({
       name: "my",
     });

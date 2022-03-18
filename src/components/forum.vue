@@ -7,7 +7,7 @@
       <div class="content">
         <div class="text">
           <div class="user-id" @click="userDetails">
-            <template v-if="data.userMessage.headImg">
+            <template v-if="data.userMessage && data.userMessage.headImg">
               <img :src="data.userMessage.headImg" class="head-img" />
             </template>
             <template v-else>
@@ -25,10 +25,12 @@
             <span>{{ data.content }}</span>
           </div>
         </div>
-        <Images
+        <template v-if="data.img">
+          <Images
           :images="data.img.length > 2 ? [data.img[0], data.img[1]] : data.img"
           class="image-black"
         />
+        </template>
       </div>
     </div>
     <div class="floor-type">

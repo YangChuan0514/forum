@@ -109,6 +109,8 @@ import {
   addUserAttention,
   deleteUserAttention,
   updateUserAttWarn,
+  updateDianzanWarn,
+  updateUserForumComment,
 } from "../../services/forum/index";
 const router = useRouter();
 const id = document.cookie.split("=")[1];
@@ -124,7 +126,7 @@ const ListDate = async () => {
     res(getUserAttentionTMessage({ userId: Number(id) }));
   });
   const Uc = new Promise((res) => {
-    res(getUserForumComment({ userId: Number(id), o: 1, l: 10 }));
+    res(getUserForumComment({ userId: Number(id), o: 1, l: 50 }));
   });
   let res: any[] = await Promise.all([dz, At, Uc]);
   const dzDate = res[0]?.data;
@@ -135,7 +137,7 @@ const ListDate = async () => {
   chatWarnNum.value = ucDate.filter((item) => !item.warn).length;
   res = [].concat(dzDate, atDate, ucDate);
   List.value = res.sort((a, b) => {
-    return a.newTime - b.newTime;
+    return b.newTime - a.newTime;
   });
 };
 onMounted(async () => {
@@ -147,24 +149,34 @@ const onClickLeft = () => {
   });
 };
 const likeSelect = async () => {
+  if (Number(dzWarnNum.value) > 0) {
+    await updateDianzanWarn({ userId: Number(id) });
+  }
   const res = await getUserDianzanNum({ userId: Number(id) });
   List.value = res?.data?.sort((a, b) => {
-    return a.newTime - b.newTime;
+    return b.newTime - a.newTime;
   });
+  dzWarnNum.value = List.value.filter((item) => !item.warn).length;
 };
 const starSelect = async () => {
-  await updateUserAttWarn({ userId: Number(id) });
+  if (Number(starWarnNum.value) > 0) {
+    await updateUserAttWarn({ userId: Number(id) });
+  }
   const res = await getUserAttentionTMessage({ userId: Number(id) });
   List.value = res?.data?.sort((a, b) => {
-    return a.newTime - b.newTime;
+    return b.newTime - a.newTime;
   });
   starWarnNum.value = List.value.filter((item) => !item.warn).length;
 };
 const chatSelect = async () => {
-  const res = await getUserForumComment({ userId: Number(id), o: 1, l: 10 });
+  if (Number(chatWarnNum.value) > 0) {
+    await updateUserForumComment({ userId: Number(id), o: 1, l: 50 });
+  }
+  const res = await getUserForumComment({ userId: Number(id), o: 1, l: 50 });
   List.value = res?.data?.rows?.sort((a, b) => {
-    return a.newTime - b.newTime;
+    return b.newTime - a.newTime;
   });
+  chatWarnNum.value = List.value.filter((item) => !item.warn).length;
 };
 const time = (val: number) => {
   return dayjs(val * 1000).format("MM-DD HH:mm:ss");
